@@ -1,0 +1,8 @@
+services:
+  cyclegan:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    entrypoint: ["python", "main.py"]
+    volumes:
+      - ./:/cyclegan
