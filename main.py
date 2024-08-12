@@ -71,8 +71,13 @@ cycle_A_Loss = []
 cycle_B_Loss = []
 G_Loss = []
 
+a_imgs = []
+b_imgs = []
+fake_a_imgs = []
+fake_b_imgs = []
+
 for epoch in range(NUM_EPOCHS):
-   model_training.train_fn(
+   a, b, fake_a, fake_b = model_training.train_fn(
         disc_B,
         disc_A,
         gen_A,
@@ -92,7 +97,12 @@ for epoch in range(NUM_EPOCHS):
         epoch,
         LAMBDA_CYCLE,
         DEVICE
-)
+   )
+
+   a_imgs.append(a)
+   b_imgs.append(b)
+   fake_a_imgs.append(fake_a)
+   fake_b_imgs.append(fake_b)
 
 if SAVE_MODEL:
           model_io.save_checkpoint(gen_B, opt_gen, filename=CHECKPOINT_GENERATOR_B)

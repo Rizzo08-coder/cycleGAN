@@ -53,22 +53,16 @@ def train_fn(
             cycle_a_loss = l1(a, cycle_a)
             cycle_b_loss = l1(b, cycle_b)
 
-            # identity losses
-            # identity_zebra = gen_Z(zebra)
-            # identity_horse = gen_H(horse)
-            # identity_zebra_loss = l1(zebra, identity_zebra)
-            # identity_horse_loss = l1(horse, identity_horse)
-
-            #gen zebra loss
+            #gen a loss
             gen_A_Loss.append(loss_G_A.item())
 
-            #gen horse loss
+            #gen b loss
             gen_B_Loss.append(loss_G_B.item())
 
-            #cycle zebra loss
+            #cycle a loss
             cycle_A_Loss.append(cycle_a_loss.item())
 
-            #cycle horse loss
+            #cycle b loss
             cycle_B_Loss.append(cycle_a_loss.item())
 
             # total loss
@@ -77,8 +71,6 @@ def train_fn(
                 + loss_G_B
                 + cycle_a_loss * LAMBDA_CYCLE
                 + cycle_b_loss * LAMBDA_CYCLE
-                # + identity_horse_loss * LAMBDA_IDENTITY
-                # + identity_zebra_loss * LAMBDA_IDENTITY
             )
             G_Loss.append(G_loss.item())
 
@@ -87,8 +79,12 @@ def train_fn(
         g_scaler.step(opt_gen)
         g_scaler.update()
 
+        '''
         if idx == len(loader) - 1:
           save_image(fake_b * 0.5 + 0.5, f"outputs/b_batch{idx}_epoch{epoch}.png")
           save_image(fake_a * 0.5 + 0.5, f"outputs/a_batch{idx}_epoch{epoch}.png")
+        '''
 
         loop.set_postfix(B_real=B_reals / (idx + 1), B_fake=B_fakes / (idx + 1))
+
+        return a, b, fake_a, fake_b
