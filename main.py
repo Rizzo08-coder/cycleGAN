@@ -1,8 +1,6 @@
 import model_io
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import neuralblocks
+import torch, torch.nn as nn, torch.optim as optim
+import model_blocks
 import model_training
 import data_processing
 
@@ -31,10 +29,10 @@ CHECKPOINT_DISCRIMINATOR_A = "./models/discz.pth.tar"
 
 loader = data_processing.create_loader(TRAIN_DIR, data_processing.VanGogh2PhotoDataset, BATCH_SIZE, NUM_WORKERS)
 
-disc_B = neuralblocks.Discriminator(in_channels=3).to(DEVICE)
-disc_A = neuralblocks.Discriminator(in_channels=3).to(DEVICE)
-gen_A = neuralblocks.Generator(img_channels=3, num_residuals=9).to(DEVICE)
-gen_B = neuralblocks.Generator(img_channels=3, num_residuals=9).to(DEVICE)
+disc_B = model_blocks.Discriminator(in_channels=3).to(DEVICE)
+disc_A = model_blocks.Discriminator(in_channels=3).to(DEVICE)
+gen_A = model_blocks.Generator(img_channels=3, num_residuals=9).to(DEVICE)
+gen_B = model_blocks.Generator(img_channels=3, num_residuals=9).to(DEVICE)
 
 # use Adam Optimizer for both generator and discriminator
 opt_disc = optim.Adam(

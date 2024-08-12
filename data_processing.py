@@ -1,10 +1,9 @@
-from PIL import Image, ImageEnhance
-from torch.utils.data import Dataset
-import numpy as np
 import os
+from PIL import Image, ImageEnhance
+from torch.utils.data import Dataset, DataLoader
+import numpy as np
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
-from torch.utils.data import DataLoader
 
 
 class VanGogh2PhotoDataset(Dataset):
